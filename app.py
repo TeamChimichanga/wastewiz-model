@@ -16,6 +16,9 @@ def predictResult():
     
     image = request.files['image']
 
+    temp_image_path = 'temp_image.jpg'
+    image.save(temp_image_path)
+
     # invalid name
     if image.filename == '':
         return 'No selected file', 400
@@ -29,7 +32,7 @@ def predictResult():
     project = rf.workspace().project(project_version)
     model = project.version(version_num).model
 
-    prediction = model.predict("your_image.jpg", confidence=40, overlap=30)
+    prediction = model.predict("temp_image.jpg", confidence=40, overlap=30)
     prediction.save("prediction.jpg")
     data = prediction.json()
 
