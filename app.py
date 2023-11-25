@@ -44,7 +44,7 @@ def predictResult():
     model = project.version(version_num).model
 
     prediction = model.predict(temp_image_path, confidence=40, overlap=30)
-    prediction.save(prediction_img_name)
+    prediction.save(prediction_img_name, stroke=4)
     data = prediction.json()
 
     classes = set()
