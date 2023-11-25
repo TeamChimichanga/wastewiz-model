@@ -14,6 +14,10 @@ temp_img_name = "temp.jpg"
 
 app = Flask(__name__)
 
+@app.route('/healtz', methods=['GET'])
+def healtz():
+    return "OK", 200
+
 @app.route('/predict', methods=['POST'])
 def predictResult():
 
