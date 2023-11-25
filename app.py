@@ -4,6 +4,9 @@ import base64
 from dotenv import load_dotenv
 import os
 
+load_dotenv()
+
+api_key = os.getenv("API_KEY")
 project_version = "rudo_v3"
 version_num = 2
 prediction_img_name = "prediction.jpg"
@@ -14,8 +17,6 @@ app = Flask(__name__)
 @app.route('/predict', methods=['POST'])
 def predictResult():
 
-    load_dotenv()
-    api_key = os.getenv("API_KEY")
     # image argument not passed
     if 'image' not in request.files:
         return 'No image part in the request', 400
