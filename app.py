@@ -1,8 +1,9 @@
 from roboflow import Roboflow
 from flask import Flask, request, jsonify
 import base64
+from dotenv import load_dotenv
+import os
 
-api_key = "8LSrlY9iHWxNrSMRud5u"
 project_version = "rudo_v3"
 version_num = 2
 prediction_img_name = "prediction.jpg"
@@ -13,6 +14,8 @@ app = Flask(__name__)
 @app.route('/predict', methods=['POST'])
 def predictResult():
 
+    load_dotenv()
+    api_key = os.getenv("API_KEY")
     # image argument not passed
     if 'image' not in request.files:
         return 'No image part in the request', 400
