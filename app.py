@@ -4,6 +4,8 @@ from flask import Flask, request, jsonify
 api_key = "8LSrlY9iHWxNrSMRud5u"
 project_version = "rudo_v3"
 version_num = 2
+prediction_img_name = "prediction.jpg"
+temp_img_name = "temp.jpg"
 
 app = Flask(__name__)
 
@@ -16,7 +18,7 @@ def predictResult():
     
     image = request.files['image']
 
-    temp_image_path = 'temp_image.jpg'
+    temp_image_path = temp_img_name
     image.save(temp_image_path)
 
     # invalid name
@@ -32,8 +34,8 @@ def predictResult():
     project = rf.workspace().project(project_version)
     model = project.version(version_num).model
 
-    prediction = model.predict("temp_image.jpg", confidence=40, overlap=30)
-    prediction.save("prediction.jpg")
+    prediction = model.predict(temp_img_name, confidence=40, overlap=30)
+    prediction.save(prediction_img_name)
     data = prediction.json()
 
     classes = set()
@@ -44,7 +46,7 @@ def predictResult():
 
     unique_classes = list(classes)
 
-    result_image = open('prediction.jpg', 'rb')
+    result_image = open(prediction_img_name, 'rb')
     result = [result_image, unique_classes]
 
     return result, 200
