@@ -1,5 +1,6 @@
 from roboflow import Roboflow
 from flask import Flask, request, jsonify
+import base64
 
 api_key = "8LSrlY9iHWxNrSMRud5u"
 project_version = "rudo_v3"
@@ -34,7 +35,7 @@ def predictResult():
     project = rf.workspace().project(project_version)
     model = project.version(version_num).model
 
-    prediction = model.predict(temp_img_name, confidence=40, overlap=30)
+    prediction = model.predict(temp_image_path, confidence=40, overlap=30)
     prediction.save(prediction_img_name)
     data = prediction.json()
 
@@ -46,7 +47,11 @@ def predictResult():
 
     unique_classes = list(classes)
 
-    result_image = open(prediction_img_name, 'rb')
-    result = [result_image, unique_classes]
+    # Open the result image and convert to base64
+    with open(prediction_img_name, "rb") as img_file:
+        result_image = base64.b64encode(img_file.read()).decode('utf-8')
+
+    # Return the result image as base64 string and unique classes detected
+    result = {'result_image_base64': result_image, 'unique_classes': unique_classes}
 
     return result, 200
