@@ -2,6 +2,7 @@ from roboflow import Roboflow
 from flask import Flask, request, jsonify
 import base64
 from dotenv import load_dotenv
+from flask_cors import CORS
 import os
 
 load_dotenv()
@@ -13,6 +14,7 @@ prediction_img_name = "prediction.jpg"
 temp_img_name = "temp.jpg"
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/healtz', methods=['GET'])
 def healtz():
