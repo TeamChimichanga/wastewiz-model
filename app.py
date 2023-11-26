@@ -21,9 +21,9 @@ def healtz():
 @app.route('/predict', methods=['POST'])
 def predictResult():
 
-    # image argument not passed
-    if 'image' not in request.files:
-        return 'No image part in the request', 400
+    # # image argument not passed
+    # if 'image' not in request.files:
+    #     return 'No image part in the request', 400
     
     image = request.files['image']
 
