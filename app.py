@@ -22,8 +22,8 @@ def healtz():
 def predictResult():
 
     # # image argument not passed
-    # if 'image' not in request.files:
-    #     return 'No image part in the request', 400
+    if 'image' not in request.files:
+        return 'No image part in the request', 400
     
     image = request.files['image']
 
